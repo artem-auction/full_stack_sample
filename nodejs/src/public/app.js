@@ -1,10 +1,15 @@
 var nodexmlhttp = new XMLHttpRequest()
 nodexmlhttp.onreadystatechange = function () {
   if (nodexmlhttp.readyState === XMLHttpRequest.DONE) {
-    document.getElementById('node_data').innerHTML = JSON.stringify(JSON.parse(nodexmlhttp.responseText), null, 4)
+    var responseArray = JSON.parse(nodexmlhttp.responseText);
+    var setHTML = "";
+    responseArray.forEach(function(element) {
+      setHTML += ("<p>" + element.full_address + "</p>");
+    });
+    document.getElementById('node_data').innerHTML = setHTML
   }
 }
-nodexmlhttp.open('GET', 'http://localhost:3000/api/properties/58dd8a74bd2c126614831605', true)
+nodexmlhttp.open('GET', 'http://localhost:3000/api/properties', true)
 nodexmlhttp.send()
 
 var javaxmlhttp = new XMLHttpRequest()
