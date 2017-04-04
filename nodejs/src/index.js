@@ -10,8 +10,6 @@ mongoose.connection.on('error', (err) => {
 })
 
 var Properties = mongoose.model('properties', mongoose.Schema({
-  full_address: 'String',
-  year_built: 'Number'
 }))
 
 var app = express()
@@ -21,8 +19,18 @@ app.use(bodyParser.json())
 
 app.get('/api/properties/:id', function (req, res) {
   Properties.findOne({ _id: req.params.id }, function (err, property) {
+    // return res.json({ test: true })
     if (err) return res.status(500).json(err)
     if (property) return res.json(property.toObject())
+    return res.status(404).json({ status: 'NOT_FOUND' })
+  })
+})
+
+app.get('/api/properties/', function (req, res) {
+  Properties.find({ }, function (err, property) {
+    // return res.json({ test: true })
+    if (err) return res.status(500).json(err)
+    if (property) return res.json(property)
     return res.status(404).json({ status: 'NOT_FOUND' })
   })
 })
