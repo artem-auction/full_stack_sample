@@ -35,6 +35,36 @@ app.get('/api/properties/', function (req, res) {
   })
 })
 
+
+app.get('/:id', function (req, res) {
+  res.send(`
+    <html>
+      <head>
+        <link href="/public/styles.css" rel="stylesheet"/>
+        <script>
+        var id = "` +
+
+        req.params.id
+        + `"
+        </script>
+        <script src="/public/app2.js"></script>
+
+      </head>
+      <body>
+        <h1>NodeJS API Call with Searching By Property ID</h1>
+         <p id="coords">
+         </p>
+         <div id="map"></div>
+        <pre class="box" id="node_data"></pre>
+      </body>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQowz8tfWeYsMqrLld7pQUdg9IXQ3vBus&callback=initMap">
+    </script>
+
+    </html>
+  `)
+})
+
 app.get('/', function (req, res) {
   res.send(`
     <html>
@@ -48,10 +78,17 @@ app.get('/', function (req, res) {
         <h1>Java API Call</h1>
         <pre class="box" id="java_data"></pre>
         <h1>NodeJS API Call</h1>
+        <div class="row zip_filter">
+          <p>
+            <input type="checkbox" id="cbox33130" value="33130">
+            <label for="cbox33130">33130</label>
+          </p>
+        </div>
         <pre class="box" id="node_data"></pre>
       </body>
     </html>
   `)
 })
+
 
 http.createServer(app).listen(3000)
